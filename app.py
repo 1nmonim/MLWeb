@@ -1,5 +1,7 @@
-from flask import Flask, render_template
-from requests import request
+
+from flask import Flask, render_template, request
+
+import os
 
 app = Flask(__name__)
 
@@ -7,14 +9,17 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-
 @app.route('/mnist', methods=['GET', 'POST'])
 def mnist():
     if request.method == 'GET':
         return render_template('mnistform.html')
     else:
-        pass
+        f = request.files['mnistfile']
+        path = os.path.dirname(__file__) + '/upload/' + f.filename
+        f.save(path)
+        return '성공!'
 
 
 if __name__ ==  '__main__':
     app.run(debug=True)
+    
