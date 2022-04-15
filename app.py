@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from requests import request
 
 app = Flask(__name__)
 
@@ -6,6 +7,14 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+
+@app.route('/mnist', methods=['GET', 'POST'])
+def mnist():
+    if request.method == 'GET':
+        return render_template('mnistform.html')
+    else:
+        pass
+
+
 if __name__ ==  '__main__':
     app.run(debug=True)
-    
